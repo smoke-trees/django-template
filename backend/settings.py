@@ -25,7 +25,7 @@ SECRET_KEY = os.getenv(
     'SECRET_KEY', default='*&0j8*7%np1*(8l)whbnw8u^)3lihamvddbz#bv-=3t#z2u^9s')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = int(os.getenv('DEBUG', default=0))
+DEBUG = int(os.getenv('DEBUG', default=1))
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', os.getenv("VIRTUAL_HOST")]
 CORS_ALLOWED_ORIGINS = ['http://localhost', 'http://127.0.0.1', f"https://{os.getenv('VIRTUAL_HOST', default='example.com')}"]
@@ -94,6 +94,11 @@ DATABASES = {
         'PASSWORD': os.getenv('POSTGRES_PASSWORD', default='postgres'),
         'HOST': 'db',
         'PORT': '5432'
+    }
+} if not DEBUG else {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3'
     }
 }
 
